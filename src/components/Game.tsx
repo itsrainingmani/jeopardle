@@ -18,24 +18,25 @@ export function Game() {
   const [progression, setProgression] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [answer, setAnswer] = useState("");
+  const [money, setMoney] = useState(0);
 
   const fetchData = async () => {
     try {
-      // const response = await fetch("http://localhost:8000/random");
-      // const clue_data: ClueType = await response.json();
-      const clue_data: ClueType = {
-        id: 1,
-        round: 1,
-        clue_value: 100,
-        daily_double_value: 0,
-        category: "LAKES & RIVERS",
-        comments: null,
-        answer: "River mentioned most often in the Bible",
-        question: "the Jordan",
-        air_date: new Date("1984-09-10"),
-        notes: null,
-        season: 1,
-      };
+      const response = await fetch("http://localhost:8000/random");
+      const clue_data: ClueType = await response.json();
+      // const clue_data: ClueType = {
+      //   id: 1,
+      //   round: 1,
+      //   clue_value: 100,
+      //   daily_double_value: 0,
+      //   category: "LAKES & RIVERS",
+      //   comments: null,
+      //   answer: "River mentioned most often in the Bible",
+      //   question: "the Jordan",
+      //   air_date: new Date("1984-09-10"),
+      //   notes: null,
+      //   season: 1,
+      // };
 
       setGameState((prevState) => ({
         ...prevState,
@@ -62,12 +63,21 @@ export function Game() {
       answer,
       gameState.currentClue.question
     );
+
     setGameState((prev) => ({
       ...prev,
       userAnswer: answer,
       isAnswered: true,
       similarity,
     }));
+
+    setTimeout(() => {
+      if (similarity > 75) {
+        setMoney(money + gameState.currentClue.clue_value);
+      } else if (similarity < 33) {
+        setMoney(money - gameState.currentClue.clue_value);
+      }
+    }, 200);
   };
 
   const handleNextClue = () => {
@@ -93,6 +103,7 @@ export function Game() {
             transition={{ delay: 0.2 }}
             exit={{ opacity: 0 }}
           >
+            <Winnings money={money} />
             <Clue clue={gameState.currentClue!} />
           </motion.div>
         )}
@@ -154,6 +165,37 @@ export function Game() {
           </motion.div>
         )}
       </AnimatePresence>
+    </div>
+  );
+}
+
+function moneyColor(money: number) {
+  switch (true) {
+    case money < 0:
+      return "text-red-600";
+      break;
+    case money === 0:
+      return "text-black";
+    case money > 0:
+      return "text-green-600";
+    default:
+      return "text-black";
+  }
+}
+
+function formatMoney(money: number) {
+  if (money >= 0) {
+    return `$${money}`;
+  } else {
+    return `-$${money * -1}`;
+  }
+}
+
+function Winnings({ money }) {
+  return (
+    <div className="p-2">
+      <label className="text-muted-foreground">Winnings: </label>
+      <span className={moneyColor(money)}>{formatMoney(money)}</span>
     </div>
   );
 }

@@ -22,7 +22,7 @@ export function Results({ correctAnswer, similarity }: ResultsProps) {
         <p className="text-sm text-muted-foreground mb-2">
           Similarity to your answer: {similarity}%
         </p>
-        <Progress value={similarity} className="w-full bg-green-600" />
+        <Progress value={similarity} className="w-full" />
       </div>
     </motion.div>
   );

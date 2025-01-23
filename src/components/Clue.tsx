@@ -43,7 +43,7 @@ export function Clue({ clue }: ClueProps) {
               {clue.answer}
             </p>
             {clue.comments ?? (
-              <p className="text-xl p-4 text-center">{clue.comments}</p>
+              <p className="text-xl p-4 text-center m-auto">{clue.comments}</p>
             )}
             <div className="flex justify-between text-md text-muted-foreground">
               <span>{clue.air_date.getFullYear()}</span>
