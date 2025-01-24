@@ -30,21 +30,23 @@ export function Clue({ clue }: ClueProps) {
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.2 }}
       >
         <Card className="w-full max-w-xl mx-auto">
           <CardHeader>
-            <CardTitle className="text-2xl font-bold font-mono text-center">
+            <CardTitle className="text-3xl font-bold font-mono text-center">
               {clue.category}
             </CardTitle>
+            {clue.comments && (
+              <p className="text-md px-2 text-center text-muted-foreground italic">
+                {clue.comments}
+              </p>
+            )}
           </CardHeader>
           <CardContent>
             <p className="text-2xl mb-8 p-4 text-center font-medium font-[Lexend]">
               {clue.answer}
             </p>
-            {clue.comments ?? (
-              <p className="text-xl p-4 text-center m-auto">{clue.comments}</p>
-            )}
             <div className="flex justify-between text-md text-muted-foreground">
               <span>{clue.air_date.getFullYear()}</span>
               <span>Round: {round}</span>

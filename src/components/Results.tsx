@@ -16,13 +16,16 @@ export function Results({ correctAnswer, similarity }: ResultsProps) {
     >
       <div className="text-center">
         <p className="text-lg font-semibold">Correct Answer:</p>
-        <p className="text-xl font-[Lexend]">{correctAnswer}</p>
+        <p className="text-2xl font-[Lexend]">{correctAnswer}</p>
       </div>
       <div>
         <p className="text-sm text-muted-foreground mb-2">
           Similarity to your answer: {similarity}%
         </p>
-        <Progress value={similarity} className="w-full" />
+        <Progress
+          value={similarity}
+          className="w-full [&>div]:bg-gradient-to-r [&>div]:from-[var(--jeopardy-accent)] [&>div]:to-[var(--jeopardy-main)] [&>div]:rounded-l-full"
+        />
       </div>
     </motion.div>
   );

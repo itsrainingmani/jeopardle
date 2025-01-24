@@ -9,7 +9,7 @@ export function SiteFooter() {
           href={siteConfig.links.twitter}
           target="_blank"
           rel="noreferrer"
-          className="font-medium underline underline-offset-4"
+          className="font-medium underline underline-offset-2 after:content-['↗'] decoration-dotted hover:decoration-solid"
         >
           itsrainingmani
         </a>
@@ -18,7 +18,7 @@ export function SiteFooter() {
           href={siteConfig.links.github}
           target="_blank"
           rel="noreferrer"
-          className="font-medium underline underline-offset-4"
+          className="font-medium underline underline-offset-2 after:content-['↗'] decoration-dotted hover:decoration-solid"
         >
           GitHub
         </a>
