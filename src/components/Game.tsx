@@ -124,7 +124,7 @@ export function Game() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-xl">
-      <h1 className="text-6xl font-extrabold text-center mb-8 text-[var(--jeopardy-main)]">
+      <h1 className="text-6xl p-4 font-extrabold text-center mb-8 bg-gradient-to-r from-[var(--jeopardy-accent)] to-[var(--jeopardy-main)] text-transparent bg-clip-text">
         jeopardle
         {/* <sub className="text-red-600 font-extrabold text-lg">hard</sub> */}
       </h1>
@@ -211,7 +211,6 @@ function moneyColor(money: number) {
   switch (true) {
     case money < 0:
       return "text-red-600";
-      break;
     case money === 0:
       return "text-black";
     case money > 0:
@@ -221,7 +220,12 @@ function moneyColor(money: number) {
   }
 }
 
-function Winnings({ money }) {
+interface WinningsProps {
+  money: number;
+}
+
+function Winnings({ money }: WinningsProps) {
+  const neg_money = money < 0;
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -233,7 +237,8 @@ function Winnings({ money }) {
       <AnimatedNumber
         className={cn(
           "inline-flex items-center text-lg",
-          `before:content-[${money < 0 ? "'-$'" : "'$'"}]`,
+          !neg_money && "before:content-['$']",
+          neg_money && "before:content-['-$']",
           moneyColor(money)
         )}
         springOptions={{
