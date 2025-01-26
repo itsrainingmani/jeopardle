@@ -4,11 +4,17 @@ import { Clue } from "./Clue";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
-import { Results } from "./Results";
-import { LoadingClue } from "./LoadingClue";
+import { Results } from "@/components/Results";
+import { Winnings } from "@/components/Winnings";
+import { LoadingClue } from "@/components/LoadingClue";
 import { calculateSimilarity } from "@/utils/similarity";
-import { AnimatedNumber } from "./ui/animated-number";
-import { cn } from "@/lib/utils";
+
+import { createLazyFileRoute } from "@tanstack/react-router";
+import { SkipForwardIcon } from "lucide-react";
+
+export const Route = createLazyFileRoute("/")({
+  component: Game,
+});
 
 export function Game() {
   const [gameState, setGameState] = useState<GameState>({
@@ -25,22 +31,11 @@ export function Game() {
     try {
       const response = await fetch("http://localhost:8000/random");
       const clue_data: ClueType = await response.json();
-      // const clue_data: ClueType = {
-      //   id: 1,
-      //   round: 1,
-      //   clue_value: 100,
-      //   daily_double_value: 0,
-      //   category: "LAKES & RIVERS",
-      //   comments: "there is a comment here",
-      //   answer: "River mentioned most often in the Bible",
-      //   question: "the Jordan",
-      //   air_date: new Date("1984-09-10"),
-      //   notes: null,
-      //   season: 1,
-      // };
 
       setGameState((prevState) => ({
         ...prevState,
+        isAnswered: false,
+        similarity: 0,
         currentClue: {
           ...clue_data,
           air_date: new Date(clue_data.air_date),
@@ -84,10 +79,10 @@ export function Game() {
 
   useEffect(() => {
     setTimeout(() => {
-      console.log(1);
       // fetchData();
       fetchMock();
-    }, 2000);
+    }, 1500);
+    // fetchData();
   }, []);
 
   const handleAnswer = () => {
@@ -117,17 +112,13 @@ export function Game() {
   const handleNextClue = () => {
     setIsLoading(true);
     setAnswer("");
-    setGameState((prev) => ({ ...prev, isAnswered: false }));
+    setGameState((prev) => ({ ...prev, isAnswered: false, similarity: 0 }));
     // fetchData();
     fetchMock();
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-xl">
-      <h1 className="text-6xl p-4 font-extrabold text-center mb-8 bg-gradient-to-r from-[var(--jeopardy-accent)] to-[var(--jeopardy-main)] text-transparent bg-clip-text">
-        jeopardle
-        {/* <sub className="text-red-600 font-extrabold text-lg">hard</sub> */}
-      </h1>
+    <div className="container mx-auto px-4 py-8 max-w-xl justify-center items-center">
       <Winnings money={money} />
       <AnimatePresence mode="wait">
         {isLoading ? (
@@ -165,22 +156,23 @@ export function Game() {
           }
         />
 
-        <div className="flex flex-row gap-1">
+        <div className="flex flex-row gap-1 justify-center">
           <Button
-            className="w-full bg-[var(--jeopardy-accent)] hover:bg-[var(--jeopardy-main)]"
+            className="p-6 m-2 rounded-3xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] text-lg"
             disabled={gameState.isAnswered || isLoading}
             onClick={handleAnswer}
           >
             Answer
           </Button>
           <Button
-            className="w-full bg-zinc-600"
+            className="p-6 m-2 rounded-3xl bg-zinc-500 text-lg text-muted"
             disabled={gameState.isAnswered || isLoading}
             onClick={() =>
               setGameState((prev) => ({ ...prev, isAnswered: true }))
             }
           >
             Skip
+            <SkipForwardIcon />
           </Button>
         </div>
       </motion.div>
@@ -192,61 +184,22 @@ export function Game() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
             exit={{ opacity: 0, y: -20 }}
+            className="flex flex-col justify-center items-center"
           >
             <Results
+              skipped={answer.length === 0}
               correctAnswer={gameState.currentClue!.question}
               similarity={gameState.similarity}
             />
-            <Button onClick={handleNextClue} className="w-full mt-4">
-              Play Again
+            <Button
+              onClick={handleNextClue}
+              className="p-6 mt-4 justify-center rounded-3xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] text-lg"
+            >
+              Next Clue
             </Button>
           </motion.div>
         )}
       </AnimatePresence>
     </div>
-  );
-}
-
-function moneyColor(money: number) {
-  switch (true) {
-    case money < 0:
-      return "text-red-600";
-    case money === 0:
-      return "text-black";
-    case money > 0:
-      return "text-green-600";
-    default:
-      return "text-black";
-  }
-}
-
-interface WinningsProps {
-  money: number;
-}
-
-function Winnings({ money }: WinningsProps) {
-  const neg_money = money < 0;
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.2 }}
-      className="p-2"
-    >
-      <label className="text-muted-foreground text-lg">Winnings: </label>
-      <AnimatedNumber
-        className={cn(
-          "inline-flex items-center text-lg",
-          !neg_money && "before:content-['$']",
-          neg_money && "before:content-['-$']",
-          moneyColor(money)
-        )}
-        springOptions={{
-          bounce: 0,
-          duration: 750,
-        }}
-        value={Math.abs(money)}
-      />
-    </motion.div>
   );
 }
