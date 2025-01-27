@@ -23,7 +23,7 @@ const item = {
 
 function ListEl({ children }: { children: React.ReactNode }) {
   return (
-    <motion.li variants={item} className="py-2 text-xl font-medium">
+    <motion.li variants={item} className="py-2 text-xl font-medium ml-4">
       {children}
     </motion.li>
   );
@@ -57,11 +57,13 @@ function About() {
         </ListEl>
         <ListEl>Become a Trivia Champion! & apply to go on Jeopardy!</ListEl>
       </motion.ul>
-      <Link to="/">
-        <Button className="before:content-['←'] p-6 my-8 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] text-lg">
-          Back Home
-        </Button>
-      </Link>
+      <div className="flex justify-center sm:justify-start">
+        <Link to="/">
+          <Button className="before:content-['←'] p-6 my-8 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] text-lg">
+            Back Home
+          </Button>
+        </Link>
+      </div>
       <details className="font-sans">
         <summary className="font-bold text-2xl pb-4 hover:cursor-pointer">
           Disclaimer

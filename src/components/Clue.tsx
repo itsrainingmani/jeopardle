@@ -32,19 +32,19 @@ export function Clue({ clue }: ClueProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2 }}
       >
-        <Card className="w-full max-w-xl mx-auto">
+        <Card className="w-full mx-auto">
           <CardHeader>
-            <CardTitle className="text-3xl font-bold font-mono text-center">
+            <CardTitle className="sm:text-3xl text-2xl font-bold font-mono text-center">
               {clue.category}
             </CardTitle>
             {clue.comments && (
-              <p className="text-md px-2 text-center text-muted-foreground italic">
+              <p className="sm:text-md text-sm px-2 text-center text-muted-foreground italic">
                 {clue.comments}
               </p>
             )}
           </CardHeader>
           <CardContent>
-            <p className="text-2xl mb-8 p-4 text-center font-medium font-[Lexend]">
+            <p className="sm:text-2xl text-xl mb-8 p-4 text-center font-medium font-[Lexend]">
               {clue.answer}
             </p>
             <div className="flex justify-between text-md text-muted-foreground">

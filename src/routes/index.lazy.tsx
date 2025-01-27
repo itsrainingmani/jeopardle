@@ -15,10 +15,10 @@ export const Route = createLazyFileRoute("/")({
 
 function Index() {
   return (
-    <div className="flex flex-col gap-2 my-10 mx-auto px-4 py-8 max-w-xl min-h-screen items-center">
+    <div className="flex flex-col gap-2 mt-10 mx-auto px-4 py-8 max-w-3xl items-center">
       <div className="flex flex-col gap-4 justify-center items-center">
-        <h3 className="font-semibold text-3xl">Game Modes</h3>
-        <motion.div className="flex flex-row gap-4 justify-center">
+        <h3 className="font-semibold text-3xl sm:text-4xl">Game Modes</h3>
+        <motion.div className="flex flex-col items-center sm:flex-row sm:gap-4 gap-2 justify-center">
           <Link to="/game">
             <Button className="p-6 m-2 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] font-semibold text-xl">
               Infinite Jeopardy!

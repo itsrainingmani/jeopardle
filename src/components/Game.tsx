@@ -50,40 +50,7 @@ export function Game() {
     }
   };
 
-  // const fetchMock = async () => {
-  //   try {
-  //     const clue_data: ClueType = {
-  //       id: 1,
-  //       round: 1,
-  //       clue_value: 100,
-  //       daily_double_value: 0,
-  //       category: "LAKES & RIVERS",
-  //       comments: "there is a comment here",
-  //       answer: "River mentioned most often in the Bible",
-  //       question: "the Jordan",
-  //       air_date: new Date("1984-09-10"),
-  //       notes: null,
-  //       season: 1,
-  //     };
-  //     setGameState((prevState) => ({
-  //       ...prevState,
-  //       currentClue: {
-  //         ...clue_data,
-  //         air_date: new Date(clue_data.air_date),
-  //       },
-  //     }));
-  //   } catch (error) {
-  //     console.error("Failed to fetch clue:", error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   useEffect(() => {
-    // using setTimeout here to see how the loading state looks
-    // setTimeout(() => {
-    //   fetchMock();
-    // }, 1500);
     fetchData();
   }, []);
 
@@ -116,11 +83,10 @@ export function Game() {
     setAnswer("");
     setGameState((prev) => ({ ...prev, isAnswered: false, similarity: 0 }));
     fetchData();
-    // fetchMock();
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-xl justify-center items-center">
+    <div className="container mx-auto px-4 py-8 max-w-2xl justify-center items-center">
       <Winnings money={money} />
       <AnimatePresence mode="wait">
         {isLoading ? (
@@ -158,16 +124,16 @@ export function Game() {
           }
         />
 
-        <div className="flex flex-row gap-1 justify-center">
+        <div className="flex flex-col sm:flex-row gap-2 justify-center">
           <Button
-            className="p-6 m-2 rounded-3xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] text-lg"
+            className="p-6 m-2 rounded-3xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] sm:text-lg text-md"
             disabled={gameState.isAnswered || isLoading}
             onClick={handleAnswer}
           >
             Answer
           </Button>
           <Button
-            className="p-6 m-2 rounded-3xl bg-zinc-500 text-lg text-muted"
+            className="p-6 m-2 rounded-3xl bg-zinc-500 sm:text-lg text-md text-muted"
             disabled={gameState.isAnswered || isLoading}
             onClick={() =>
               setGameState((prev) => ({ ...prev, isAnswered: true }))
@@ -195,7 +161,7 @@ export function Game() {
             />
             <Button
               onClick={handleNextClue}
-              className="p-6 mt-4 justify-center rounded-3xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] text-lg"
+              className="p-6 mt-4 justify-center rounded-3xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] sm:text-lg text-md"
             >
               Next Clue
             </Button>
