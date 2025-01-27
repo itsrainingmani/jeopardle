@@ -9,14 +9,9 @@ import { Winnings } from "@/components/Winnings";
 import { LoadingClue } from "@/components/LoadingClue";
 import { calculateSimilarity } from "@/utils/similarity";
 
-import { createLazyFileRoute } from "@tanstack/react-router";
 import { SkipForwardIcon } from "lucide-react";
 
 const RANDOM_API_URL = `${import.meta.env.VITE_API_URL}/random`;
-
-export const Route = createLazyFileRoute("/")({
-  component: Game,
-});
 
 export function Game() {
   const [gameState, setGameState] = useState<GameState>({

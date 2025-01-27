@@ -1,9 +1,9 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 export const Route = createLazyFileRoute("/reverse")({
-  component: RouteComponent,
+  component: ReverseGame,
 });
 
-function RouteComponent() {
+function ReverseGame() {
   return <div>Hello "/reverse"!</div>;
 }

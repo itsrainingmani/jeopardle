@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "itsrainingmani",
-  url: "https://itsrainingmani.dev",
+  url: "https://jeopardle.itsrainingmani.dev",
   ogImage: "https://ui.shadcn.com/og.jpg",
   description: "Jeopardle - It's Jeopardy but Wordle?",
   links: {
