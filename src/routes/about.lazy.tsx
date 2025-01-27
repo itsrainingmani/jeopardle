@@ -11,7 +11,7 @@ const container = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.5,
+      staggerChildren: 0.4,
     },
   },
 };
@@ -32,12 +32,12 @@ function ListEl({ children }: { children: React.ReactNode }) {
 function About() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-xl justify-center items-center">
-      <p className="font-medium text-xl">
+      <p className="font-medium text-xl py-4">
         <span className="font-extrabold mb-4 bg-gradient-to-r from-[var(--jeopardy-accent)] to-[var(--jeopardy-main)] text-transparent bg-clip-text text-xl">
-          jeopardle
+          jeopardle!
         </span>{" "}
-        was born out of my dual desires to become a Jeopardy! wizard and to make
-        something fun for people to play.
+        is a simple website that was born out of my dual desires to become a
+        Jeopardy! wizard and to make something fun for people to play.
       </p>
       <motion.ul
         variants={container}
@@ -47,11 +47,13 @@ function About() {
       >
         <ListEl>
           Try twists on the Jeopardy! formula with different modes like Infinite
-          Jeopardy & Reverse Jeopardy
+          Jeopardy & Reverse Jeopardy{" "}
+          <span className="text-muted-foreground text-sm">(coming soon!)</span>
         </ListEl>
         <ListEl>
           Want to learn more trivia? Search through every Jeopardy clue from
-          past games
+          past games{" "}
+          <span className="text-muted-foreground text-sm">(coming soon!)</span>
         </ListEl>
         <ListEl>Become a Trivia Champion! & apply to go on Jeopardy!</ListEl>
       </motion.ul>

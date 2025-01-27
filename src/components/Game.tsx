@@ -12,6 +12,8 @@ import { calculateSimilarity } from "@/utils/similarity";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { SkipForwardIcon } from "lucide-react";
 
+const RANDOM_API_URL = `${import.meta.env.VITE_API_URL}/random`;
+
 export const Route = createLazyFileRoute("/")({
   component: Game,
 });
@@ -29,7 +31,7 @@ export function Game() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:8000/random");
+      const response = await fetch(RANDOM_API_URL);
       const clue_data: ClueType = await response.json();
 
       setGameState((prevState) => ({
@@ -48,41 +50,41 @@ export function Game() {
     }
   };
 
-  const fetchMock = async () => {
-    try {
-      const clue_data: ClueType = {
-        id: 1,
-        round: 1,
-        clue_value: 100,
-        daily_double_value: 0,
-        category: "LAKES & RIVERS",
-        comments: "there is a comment here",
-        answer: "River mentioned most often in the Bible",
-        question: "the Jordan",
-        air_date: new Date("1984-09-10"),
-        notes: null,
-        season: 1,
-      };
-      setGameState((prevState) => ({
-        ...prevState,
-        currentClue: {
-          ...clue_data,
-          air_date: new Date(clue_data.air_date),
-        },
-      }));
-    } catch (error) {
-      console.error("Failed to fetch clue:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // const fetchMock = async () => {
+  //   try {
+  //     const clue_data: ClueType = {
+  //       id: 1,
+  //       round: 1,
+  //       clue_value: 100,
+  //       daily_double_value: 0,
+  //       category: "LAKES & RIVERS",
+  //       comments: "there is a comment here",
+  //       answer: "River mentioned most often in the Bible",
+  //       question: "the Jordan",
+  //       air_date: new Date("1984-09-10"),
+  //       notes: null,
+  //       season: 1,
+  //     };
+  //     setGameState((prevState) => ({
+  //       ...prevState,
+  //       currentClue: {
+  //         ...clue_data,
+  //         air_date: new Date(clue_data.air_date),
+  //       },
+  //     }));
+  //   } catch (error) {
+  //     console.error("Failed to fetch clue:", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   useEffect(() => {
-    setTimeout(() => {
-      // fetchData();
-      fetchMock();
-    }, 1500);
-    // fetchData();
+    // using setTimeout here to see how the loading state looks
+    // setTimeout(() => {
+    //   fetchMock();
+    // }, 1500);
+    fetchData();
   }, []);
 
   const handleAnswer = () => {
@@ -113,8 +115,8 @@ export function Game() {
     setIsLoading(true);
     setAnswer("");
     setGameState((prev) => ({ ...prev, isAnswered: false, similarity: 0 }));
-    // fetchData();
-    fetchMock();
+    fetchData();
+    // fetchMock();
   };
 
   return (

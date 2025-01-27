@@ -10,7 +10,7 @@ interface ResultsProps {
 export function Results({ skipped, correctAnswer, similarity }: ResultsProps) {
   return (
     <motion.div
-      className="mt-4 space-y-4"
+      className="mt-4 space-y-4 w-full"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}

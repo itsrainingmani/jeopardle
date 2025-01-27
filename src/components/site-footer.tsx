@@ -15,7 +15,7 @@ export function SiteFooter() {
         </a>
         . Source code available on{" "}
         <a
-          href={siteConfig.links.github}
+          href={siteConfig.links.github + "/jeopardle"}
           target="_blank"
           rel="noreferrer"
           className="font-medium underline underline-offset-2 after:content-['↗'] decoration-dotted hover:decoration-solid"
