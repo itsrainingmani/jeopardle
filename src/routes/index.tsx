@@ -1,3 +1,6 @@
+import { Clue } from "@/components/Clue";
+import { LoadingClue } from "@/components/LoadingClue";
+import { Results } from "@/components/Results";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -5,15 +8,41 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import type { Clue as ClueType } from "@/types/game";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { BadgeInfo } from "lucide-react";
+import { useEffect, useState } from "react";
+
+const ONTHISDAY_URL = `${import.meta.env.VITE_API_URL}/onthisday`;
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
 function Index() {
+  const [onthisday, setOnthisday] = useState<ClueType>();
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(ONTHISDAY_URL);
+      const clue_data: ClueType = await response.json();
+      console.log(clue_data);
+      setOnthisday({
+        ...clue_data,
+        air_date: new Date(clue_data.air_date),
+      });
+    } catch (error) {
+      console.error("Failed to fetch clue:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div className="flex flex-col gap-2 md:mt-10 mt-4 mx-auto px-4 py-8 max-w-3xl items-center">
       <div className="flex flex-col gap-4 justify-center items-center">
@@ -63,6 +92,33 @@ function Index() {
           <BadgeInfo />
         </Button>
       </Link>
+      <hr />
+      <AnimatePresence mode="wait">
+        {isLoading ? (
+          <div>
+            <LoadingClue />
+          </div>
+        ) : (
+          <motion.div
+            key="clue"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            exit={{ opacity: 0 }}
+            className="sm:max-w-xl max-w-lg"
+          >
+            <h3 className="font-semibold text-2xl sm:text-3xl m-2 text-center">
+              On This Day
+            </h3>
+            <Clue clue={onthisday!} />
+            <Results
+              skipped
+              correctAnswer={onthisday!.question}
+              similarity={0}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

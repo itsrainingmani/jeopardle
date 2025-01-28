@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
 
 interface ResultsProps {
@@ -11,8 +10,8 @@ export function Results({ skipped, correctAnswer, similarity }: ResultsProps) {
   return (
     <div className="mt-4 space-y-4 w-full">
       <div className="text-center">
-        <p className="text-lg font-semibold">Correct Answer:</p>
-        <p className="text-2xl font-[Lexend]">{correctAnswer}</p>
+        <p className="xl:text-lg text-md font-semibold">Correct Answer:</p>
+        <p className="xl:text-2xl text-xl font-[Lexend]">{correctAnswer}</p>
       </div>
       {!skipped && (
         <div>
