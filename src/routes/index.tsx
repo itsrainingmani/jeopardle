@@ -27,7 +27,7 @@ function Index() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button className="p-6 m-2 text-zinc-50 rounded-4xl bg-[var(--jeopardy-accent)]/75 hover:bg-[var(--jeopardy-accent)]/75 hover:cursor-not-allowed font-semibold text-xl">
+                <Button className="p-6 m-2 text-zinc-50 rounded-4xl bg-[var(--jeopardy-accent)]/50 hover:bg-[var(--jeopardy-accent)]/50 hover:border-[var(--jeopardy-accent)]/25 hover:cursor-not-allowed font-semibold text-xl focus:outline-none">
                   Reverse Jeopardy!
                 </Button>
               </TooltipTrigger>
@@ -43,7 +43,7 @@ function Index() {
           <TooltipTrigger asChild>
             <Button
               variant="outline"
-              className="p-6 m-2 rounded-4xl bg-transparent/75 text-[var(--jeopardy-main)]/25 hover:text-[var(--jeopardy-main)]/25 border-[var(--jeopardy-main)]/50 text-lg hover:cursor-not-allowed"
+              className="p-6 m-2 rounded-4xl bg-transparent/75 text-[var(--jeopardy-main)]/25 hover:text-[var(--jeopardy-main)]/25 border-[var(--jeopardy-main)]/25 hover:border-[var(--jeopardy-main)]/25 text-lg hover:cursor-not-allowed focus:outline-none"
             >
               Browse Clues
             </Button>
@@ -57,7 +57,7 @@ function Index() {
       <Link to="/about">
         <Button
           variant="outline"
-          className="p-6 m-2 rounded-4xl text-[var(--jeopardy-main)] border-[var(--jeopardy-main)] hover:bg-white text-lg"
+          className="p-6 m-2 rounded-4xl text-[var(--jeopardy-main)] border-[var(--jeopardy-main)] hover:bg-zinc-100 text-lg"
         >
           About
           <BadgeInfo />

@@ -9,12 +9,7 @@ interface ResultsProps {
 
 export function Results({ skipped, correctAnswer, similarity }: ResultsProps) {
   return (
-    <motion.div
-      className="mt-4 space-y-4 w-full"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
+    <div className="mt-4 space-y-4 w-full">
       <div className="text-center">
         <p className="text-lg font-semibold">Correct Answer:</p>
         <p className="text-2xl font-[Lexend]">{correctAnswer}</p>
@@ -30,6 +25,6 @@ export function Results({ skipped, correctAnswer, similarity }: ResultsProps) {
           />
         </div>
       )}
-    </motion.div>
+    </div>
   );
 }
