@@ -28,10 +28,12 @@ export function Winnings({ money }: WinningsProps) {
       transition={{ duration: 0.2 }}
       className="p-2"
     >
-      <label className="text-muted-foreground text-lg">Winnings: </label>
+      <label className="text-muted-foreground sm:text-lg text-sm">
+        Winnings:{" "}
+      </label>
       <AnimatedNumber
         className={cn(
-          "inline-flex items-center text-lg",
+          "inline-flex items-center sm:text-lg text-sm",
           !neg_money && "before:content-['$']",
           neg_money && "before:content-['-$']",
           moneyColor(money)

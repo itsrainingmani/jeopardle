@@ -33,8 +33,8 @@ export function Clue({ clue }: ClueProps) {
         transition={{ duration: 0.2 }}
       >
         <Card className="w-full mx-auto">
-          <CardHeader>
-            <CardTitle className="sm:text-3xl text-2xl font-bold font-mono text-center">
+          <CardHeader className="sm:p-6 p-2">
+            <CardTitle className="md:text-3xl sm:text-2xl text-lg font-bold font-mono text-center">
               {clue.category}
             </CardTitle>
             {clue.comments && (
@@ -44,14 +44,14 @@ export function Clue({ clue }: ClueProps) {
             )}
           </CardHeader>
           <CardContent>
-            <p className="sm:text-2xl text-xl mb-8 p-4 text-center font-medium font-[Lexend]">
+            <p className="md:text-2xl sm:text-xl text-lg sm:mb-8 mb-2 sm:p-4 p-2 text-center font-medium font-[Lexend]">
               {clue.answer}
             </p>
-            <div className="flex justify-between text-md text-muted-foreground">
+            <div className="flex justify-between sm:text-md text-sm text-muted-foreground">
               <span>{clue.air_date.getFullYear()}</span>
               <span>Round: {round}</span>
               {clue.round !== 3 ? (
-                <Badge className="bg-green-700 hover:bg-green-700">
+                <Badge className="bg-green-700 hover:bg-green-700 sm:text-sm text-xs">
                   ${clue.clue_value}
                 </Badge>
               ) : null}

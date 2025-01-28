@@ -15,7 +15,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="flex flex-col gap-2 mt-10 mx-auto px-4 py-8 max-w-3xl items-center">
+    <div className="flex flex-col gap-2 md:mt-10 mt-4 mx-auto px-4 py-8 max-w-3xl items-center">
       <div className="flex flex-col gap-4 justify-center items-center">
         <h3 className="font-semibold text-3xl sm:text-4xl">Game Modes</h3>
         <motion.div className="flex flex-col items-center sm:flex-row sm:gap-4 gap-2 justify-center">

@@ -81,7 +81,7 @@ export function Game() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-2xl justify-center items-center">
+    <div className="container mx-auto px-4 sm:py-8 py-2 max-w-2xl justify-center items-center">
       <Winnings money={money} />
       <AnimatePresence mode="wait">
         {isLoading ? (
@@ -121,14 +121,14 @@ export function Game() {
 
         <div className="flex flex-col sm:flex-row gap-2 justify-center">
           <Button
-            className="p-6 m-2 rounded-3xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] sm:text-lg text-md"
+            className="p-6 sm:m-2 mx-2 rounded-3xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] sm:text-lg text-md"
             disabled={gameState.isAnswered || isLoading}
             onClick={handleAnswer}
           >
             Answer
           </Button>
           <Button
-            className="p-6 m-2 rounded-3xl bg-zinc-500 sm:text-lg text-md text-muted"
+            className="p-6 sm:m-2 mx-2 rounded-3xl bg-zinc-500 sm:text-lg text-md text-muted"
             disabled={gameState.isAnswered || isLoading}
             onClick={() =>
               setGameState((prev) => ({ ...prev, isAnswered: true }))

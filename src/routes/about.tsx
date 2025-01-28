@@ -23,7 +23,10 @@ const item = {
 
 function ListEl({ children }: { children: React.ReactNode }) {
   return (
-    <motion.li variants={item} className="py-2 text-xl font-medium ml-4">
+    <motion.li
+      variants={item}
+      className="py-2 sm:text-xl text-lg font-medium ml-4"
+    >
       {children}
     </motion.li>
   );
@@ -65,10 +68,10 @@ function About() {
         </Link>
       </div>
       <details className="font-sans">
-        <summary className="font-bold text-2xl pb-4 hover:cursor-pointer">
+        <summary className="font-bold sm:text-2xl text-xl pb-4 hover:cursor-pointer">
           Disclaimer
         </summary>
-        <p className="italic text-muted-foreground text-lg">
+        <p className="italic text-muted-foreground sm:text-lg text-md">
           All data is property of Jeopardy Productions, Inc. and protected under
           law. I am not affiliated with the show.
         </p>
