@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { createLazyFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 
-export const Route = createLazyFileRoute("/about")({
+export const Route = createFileRoute("/about")({
   component: About,
 });
 
