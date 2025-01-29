@@ -8,6 +8,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { fetchData } from "@/lib/utils";
 import type { Clue as ClueType } from "@/types/game";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
@@ -24,29 +25,26 @@ function Index() {
   const [onthisday, setOnthisday] = useState<ClueType>();
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch(ONTHISDAY_URL);
-      const clue_data: ClueType = await response.json();
-      console.log(clue_data);
-      setOnthisday({
-        ...clue_data,
-        air_date: new Date(clue_data.air_date),
-      });
-    } catch (error) {
-      console.error("Failed to fetch clue:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
   useEffect(() => {
-    fetchData();
+    fetchData(ONTHISDAY_URL)
+      .then((clue_data) => {
+        setOnthisday({
+          ...clue_data,
+          air_date: new Date(clue_data.air_date),
+        });
+      })
+      .catch((error) => {
+        console.error("Failed to fetch clue:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   return (
-    <div className="flex flex-col gap-2 md:mt-10 mt-4 mx-auto px-4 py-8 max-w-3xl items-center">
+    <div className="flex flex-col gap-2 md:mt-10 sm:mt-4 mx-auto px-4 py-8 max-w-3xl items-center">
       <div className="flex flex-col gap-4 justify-center items-center">
-        <h3 className="font-semibold text-3xl sm:text-4xl">Game Modes</h3>
+        <h2 className="font-semibold text-3xl sm:text-4xl">Game Modes</h2>
         <motion.div className="flex flex-col items-center sm:flex-row sm:gap-4 gap-2 justify-center">
           <Link to="/game">
             <Button className="p-6 m-2 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] font-semibold text-xl">
@@ -105,7 +103,7 @@ function Index() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
             exit={{ opacity: 0 }}
-            className="sm:max-w-xl max-w-lg"
+            className="sm:max-w-xl md:max-w-2xl max-w-lg"
           >
             <h3 className="font-semibold text-2xl sm:text-3xl m-2 text-center">
               On This Day

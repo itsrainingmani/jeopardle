@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { Clue as ClueType, GameState } from "@/types/game";
+import type { GameState } from "@/types/game";
 import { Clue } from "./Clue";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { LoadingClue } from "@/components/LoadingClue";
 import { calculateSimilarity } from "@/utils/similarity";
 
 import { SkipForwardIcon } from "lucide-react";
+import { fetchData } from "@/lib/utils";
 
 const RANDOM_API_URL = `${import.meta.env.VITE_API_URL}/random`;
 
@@ -24,29 +25,25 @@ export function Game() {
   const [answer, setAnswer] = useState("");
   const [money, setMoney] = useState(0);
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch(RANDOM_API_URL);
-      const clue_data: ClueType = await response.json();
-
-      setGameState((prevState) => ({
-        ...prevState,
-        isAnswered: false,
-        similarity: 0,
-        currentClue: {
-          ...clue_data,
-          air_date: new Date(clue_data.air_date),
-        },
-      }));
-    } catch (error) {
-      console.error("Failed to fetch clue:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchData();
+    fetchData(RANDOM_API_URL)
+      .then((clue_data) => {
+        setGameState((prevState) => ({
+          ...prevState,
+          isAnswered: false,
+          similarity: 0,
+          currentClue: {
+            ...clue_data,
+            air_date: new Date(clue_data.air_date),
+          },
+        }));
+      })
+      .catch((error) => {
+        console.error("Failed to fetch clue:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   const handleAnswer = () => {
@@ -77,7 +74,24 @@ export function Game() {
     setIsLoading(true);
     setAnswer("");
     setGameState((prev) => ({ ...prev, isAnswered: false, similarity: 0 }));
-    fetchData();
+    fetchData(RANDOM_API_URL)
+      .then((clue_data) => {
+        setGameState((prevState) => ({
+          ...prevState,
+          isAnswered: false,
+          similarity: 0,
+          currentClue: {
+            ...clue_data,
+            air_date: new Date(clue_data.air_date),
+          },
+        }));
+      })
+      .catch((error) => {
+        console.error("Failed to fetch clue:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
