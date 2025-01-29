@@ -2,6 +2,7 @@ import { Clue } from "@/components/Clue";
 import { LoadingClue } from "@/components/LoadingClue";
 import { Results } from "@/components/Results";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
@@ -28,6 +29,7 @@ function Index() {
   useEffect(() => {
     fetchData(ONTHISDAY_URL)
       .then((clue_data) => {
+        console.log("ON THIS DAY" + clue_data);
         setOnthisday({
           ...clue_data,
           air_date: new Date(clue_data.air_date),
@@ -47,14 +49,20 @@ function Index() {
         <h2 className="font-semibold text-3xl sm:text-4xl">Game Modes</h2>
         <motion.div className="flex flex-col items-center sm:flex-row sm:gap-4 gap-2 justify-center">
           <Link to="/game">
-            <Button className="p-6 m-2 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] font-semibold text-xl">
+            <Button
+              type="button"
+              className="p-6 m-2 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] font-semibold text-xl"
+            >
               Infinite Jeopardy!
             </Button>
           </Link>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button className="p-6 m-2 text-zinc-50 rounded-4xl bg-[var(--jeopardy-accent)]/50 hover:bg-[var(--jeopardy-accent)]/50 hover:border-[var(--jeopardy-accent)]/25 hover:cursor-not-allowed font-semibold text-xl focus:outline-none">
+                <Button
+                  type="button"
+                  className="p-6 m-2 text-zinc-50 rounded-4xl bg-[var(--jeopardy-accent)]/50 hover:bg-[var(--jeopardy-accent)]/50 hover:border-[var(--jeopardy-accent)]/25 hover:cursor-not-allowed font-semibold text-xl focus:outline-none"
+                >
                   Reverse Jeopardy!
                 </Button>
               </TooltipTrigger>
@@ -69,6 +77,7 @@ function Index() {
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
+              type="button"
               variant="outline"
               className="p-6 m-2 rounded-4xl bg-transparent/75 text-[var(--jeopardy-main)]/25 hover:text-[var(--jeopardy-main)]/25 border-[var(--jeopardy-main)]/25 hover:border-[var(--jeopardy-main)]/25 text-lg hover:cursor-not-allowed focus:outline-none"
             >
@@ -83,6 +92,7 @@ function Index() {
 
       <Link to="/about">
         <Button
+          type="button"
           variant="outline"
           className="p-6 m-2 rounded-4xl text-[var(--jeopardy-main)] border-[var(--jeopardy-main)] hover:bg-zinc-100 text-lg"
         >
@@ -91,23 +101,27 @@ function Index() {
         </Button>
       </Link>
       <hr />
-      <AnimatePresence mode="wait">
+      <h3 className="font-semibold text-2xl sm:text-3xl m-2 text-center">
+        On This Day
+      </h3>
+      <AnimatePresence mode="sync">
         {isLoading ? (
-          <div>
-            <LoadingClue />
+          <div className="flex flex-col space-y-3 items-center justify-center sm:max-w-xl max-w-md w-full">
+            <Skeleton className="h-48 md:h-64 sm:max-w-xl max-w-md w-full rounded-xl mx-auto" />
+            <div className="flex flex-col justify-center items-center space-y-2">
+              <Skeleton className="h-4 w-[200px]" />
+              <Skeleton className="h-4 w-[175px]" />
+            </div>
           </div>
         ) : (
           <motion.div
-            key="clue"
+            key="loaded"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
+            transition={{ delay: 0.2 }}
             exit={{ opacity: 0 }}
-            className="sm:max-w-xl md:max-w-2xl max-w-lg"
+            className="sm:max-w-xl max-w-md w-full"
           >
-            <h3 className="font-semibold text-2xl sm:text-3xl m-2 text-center">
-              On This Day
-            </h3>
             <Clue clue={onthisday!} />
             <Results
               skipped
