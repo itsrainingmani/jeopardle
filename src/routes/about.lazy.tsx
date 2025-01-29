@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 
-export const Route = createFileRoute("/about")({
+export const Route = createLazyFileRoute("/about")({
   component: About,
 });
 
@@ -11,7 +11,7 @@ const container = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.4,
+      staggerChildren: 0.3,
     },
   },
 };
@@ -49,16 +49,32 @@ function About() {
         className="list-decimal font-[Lexend]"
       >
         <ListEl>
-          Try twists on the Jeopardy! formula with different modes like Infinite
-          Jeopardy & Reverse Jeopardy{" "}
+          Try twists on the Jeopardy! formula with different modes like{" "}
+          <Link
+            to="/infinite"
+            className="text-[var(--jeopardy-accent)] hover:text-[var(--jeopardy-main)]"
+          >
+            Infinite Jeopardy!
+          </Link>{" "}
+          & Reverse Jeopardy{" "}
           <span className="text-muted-foreground text-sm">(coming soon!)</span>
         </ListEl>
         <ListEl>
-          Want to learn more trivia? Search through every Jeopardy clue from
+          Want to learn more trivia? Search through every Jeopardy! clue from
           past games{" "}
           <span className="text-muted-foreground text-sm">(coming soon!)</span>
         </ListEl>
-        <ListEl>Become a Trivia Champion! & apply to go on Jeopardy!</ListEl>
+        <ListEl>
+          Become a Trivia Champion! &{" "}
+          <a
+            className="text-[var(--jeopardy-accent)] hover:text-[var(--jeopardy-main)]"
+            href="https://www.jeopardy.com/be-on-j/anytime-test"
+            referrerPolicy="no-referrer"
+          >
+            apply
+          </a>{" "}
+          to go on Jeopardy!
+        </ListEl>
       </motion.ul>
       <div className="flex justify-center sm:justify-start">
         <Link to="/">

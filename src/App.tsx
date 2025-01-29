@@ -1,4 +1,4 @@
-import { Game } from "@/components/Game";
+import { Game } from "@/components/Infinite";
 import { SiteFooter } from "./components/site-footer";
 
 export default function App() {

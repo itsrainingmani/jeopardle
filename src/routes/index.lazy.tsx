@@ -1,54 +1,53 @@
-import { Clue } from "@/components/Clue";
-import { LoadingClue } from "@/components/LoadingClue";
-import { Results } from "@/components/Results";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Clue } from '@/components/Clue'
+import { Results } from '@/components/Results'
+import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { fetchData } from "@/lib/utils";
-import type { Clue as ClueType } from "@/types/game";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { AnimatePresence, motion } from "framer-motion";
-import { BadgeInfo } from "lucide-react";
-import { useEffect, useState } from "react";
+} from '@/components/ui/tooltip'
+import { fetchData } from '@/lib/utils'
+import type { Clue as ClueType } from '@/types/game'
+import { createLazyFileRoute, Link } from '@tanstack/react-router'
+import { AnimatePresence, motion } from 'framer-motion'
+import { BadgeInfo } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
-const ONTHISDAY_URL = `${import.meta.env.VITE_API_URL}/onthisday`;
+const ONTHISDAY_URL = `${import.meta.env.VITE_API_URL}/onthisday`
 
-export const Route = createFileRoute("/")({
+export const Route = createLazyFileRoute('/')({
   component: Index,
-});
+})
 
 function Index() {
-  const [onthisday, setOnthisday] = useState<ClueType>();
-  const [isLoading, setIsLoading] = useState(true);
+  const [onthisday, setOnthisday] = useState<ClueType>()
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     fetchData(ONTHISDAY_URL)
       .then((clue_data) => {
-        console.log("ON THIS DAY" + clue_data);
+        console.log('ON THIS DAY' + clue_data)
         setOnthisday({
           ...clue_data,
           air_date: new Date(clue_data.air_date),
-        });
+        })
       })
       .catch((error) => {
-        console.error("Failed to fetch clue:", error);
+        console.error('Failed to fetch clue:', error)
       })
       .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+        setIsLoading(false)
+      })
+  }, [])
 
   return (
     <div className="flex flex-col gap-2 md:mt-10 sm:mt-4 mx-auto px-4 py-8 max-w-3xl items-center">
       <div className="flex flex-col gap-4 justify-center items-center">
         <h2 className="font-semibold text-3xl sm:text-4xl">Game Modes</h2>
         <motion.div className="flex flex-col items-center sm:flex-row sm:gap-4 gap-2 justify-center">
-          <Link to="/game">
+          <Link to="/infinite">
             <Button
               type="button"
               className="p-6 m-2 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] font-semibold text-xl"
@@ -132,5 +131,5 @@ function Index() {
         )}
       </AnimatePresence>
     </div>
-  );
+  )
 }

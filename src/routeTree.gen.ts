@@ -8,46 +8,51 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as ReverseImport } from './routes/reverse'
-import { Route as GameImport } from './routes/game'
-import { Route as CluesImport } from './routes/clues'
-import { Route as AboutImport } from './routes/about'
-import { Route as IndexImport } from './routes/index'
+
+// Create Virtual Routes
+
+const ReverseLazyImport = createFileRoute('/reverse')()
+const InfiniteLazyImport = createFileRoute('/infinite')()
+const CluesLazyImport = createFileRoute('/clues')()
+const AboutLazyImport = createFileRoute('/about')()
+const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
-const ReverseRoute = ReverseImport.update({
+const ReverseLazyRoute = ReverseLazyImport.update({
   id: '/reverse',
   path: '/reverse',
   getParentRoute: () => rootRoute,
-} as any)
+} as any).lazy(() => import('./routes/reverse.lazy').then((d) => d.Route))
 
-const GameRoute = GameImport.update({
-  id: '/game',
-  path: '/game',
+const InfiniteLazyRoute = InfiniteLazyImport.update({
+  id: '/infinite',
+  path: '/infinite',
   getParentRoute: () => rootRoute,
-} as any)
+} as any).lazy(() => import('./routes/infinite.lazy').then((d) => d.Route))
 
-const CluesRoute = CluesImport.update({
+const CluesLazyRoute = CluesLazyImport.update({
   id: '/clues',
   path: '/clues',
   getParentRoute: () => rootRoute,
-} as any)
+} as any).lazy(() => import('./routes/clues.lazy').then((d) => d.Route))
 
-const AboutRoute = AboutImport.update({
+const AboutLazyRoute = AboutLazyImport.update({
   id: '/about',
   path: '/about',
   getParentRoute: () => rootRoute,
-} as any)
+} as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
 
-const IndexRoute = IndexImport.update({
+const IndexLazyRoute = IndexLazyImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
-} as any)
+} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
 // Populate the FileRoutesByPath interface
 
@@ -57,35 +62,35 @@ declare module '@tanstack/react-router' {
       id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexImport
+      preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
     '/about': {
       id: '/about'
       path: '/about'
       fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
+      preLoaderRoute: typeof AboutLazyImport
       parentRoute: typeof rootRoute
     }
     '/clues': {
       id: '/clues'
       path: '/clues'
       fullPath: '/clues'
-      preLoaderRoute: typeof CluesImport
+      preLoaderRoute: typeof CluesLazyImport
       parentRoute: typeof rootRoute
     }
-    '/game': {
-      id: '/game'
-      path: '/game'
-      fullPath: '/game'
-      preLoaderRoute: typeof GameImport
+    '/infinite': {
+      id: '/infinite'
+      path: '/infinite'
+      fullPath: '/infinite'
+      preLoaderRoute: typeof InfiniteLazyImport
       parentRoute: typeof rootRoute
     }
     '/reverse': {
       id: '/reverse'
       path: '/reverse'
       fullPath: '/reverse'
-      preLoaderRoute: typeof ReverseImport
+      preLoaderRoute: typeof ReverseLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -94,53 +99,53 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/clues': typeof CluesRoute
-  '/game': typeof GameRoute
-  '/reverse': typeof ReverseRoute
+  '/': typeof IndexLazyRoute
+  '/about': typeof AboutLazyRoute
+  '/clues': typeof CluesLazyRoute
+  '/infinite': typeof InfiniteLazyRoute
+  '/reverse': typeof ReverseLazyRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/clues': typeof CluesRoute
-  '/game': typeof GameRoute
-  '/reverse': typeof ReverseRoute
+  '/': typeof IndexLazyRoute
+  '/about': typeof AboutLazyRoute
+  '/clues': typeof CluesLazyRoute
+  '/infinite': typeof InfiniteLazyRoute
+  '/reverse': typeof ReverseLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/clues': typeof CluesRoute
-  '/game': typeof GameRoute
-  '/reverse': typeof ReverseRoute
+  '/': typeof IndexLazyRoute
+  '/about': typeof AboutLazyRoute
+  '/clues': typeof CluesLazyRoute
+  '/infinite': typeof InfiniteLazyRoute
+  '/reverse': typeof ReverseLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/clues' | '/game' | '/reverse'
+  fullPaths: '/' | '/about' | '/clues' | '/infinite' | '/reverse'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/clues' | '/game' | '/reverse'
-  id: '__root__' | '/' | '/about' | '/clues' | '/game' | '/reverse'
+  to: '/' | '/about' | '/clues' | '/infinite' | '/reverse'
+  id: '__root__' | '/' | '/about' | '/clues' | '/infinite' | '/reverse'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  CluesRoute: typeof CluesRoute
-  GameRoute: typeof GameRoute
-  ReverseRoute: typeof ReverseRoute
+  IndexLazyRoute: typeof IndexLazyRoute
+  AboutLazyRoute: typeof AboutLazyRoute
+  CluesLazyRoute: typeof CluesLazyRoute
+  InfiniteLazyRoute: typeof InfiniteLazyRoute
+  ReverseLazyRoute: typeof ReverseLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  CluesRoute: CluesRoute,
-  GameRoute: GameRoute,
-  ReverseRoute: ReverseRoute,
+  IndexLazyRoute: IndexLazyRoute,
+  AboutLazyRoute: AboutLazyRoute,
+  CluesLazyRoute: CluesLazyRoute,
+  InfiniteLazyRoute: InfiniteLazyRoute,
+  ReverseLazyRoute: ReverseLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -156,24 +161,24 @@ export const routeTree = rootRoute
         "/",
         "/about",
         "/clues",
-        "/game",
+        "/infinite",
         "/reverse"
       ]
     },
     "/": {
-      "filePath": "index.tsx"
+      "filePath": "index.lazy.tsx"
     },
     "/about": {
-      "filePath": "about.tsx"
+      "filePath": "about.lazy.tsx"
     },
     "/clues": {
-      "filePath": "clues.tsx"
+      "filePath": "clues.lazy.tsx"
     },
-    "/game": {
-      "filePath": "game.tsx"
+    "/infinite": {
+      "filePath": "infinite.lazy.tsx"
     },
     "/reverse": {
-      "filePath": "reverse.tsx"
+      "filePath": "reverse.lazy.tsx"
     }
   }
 }
