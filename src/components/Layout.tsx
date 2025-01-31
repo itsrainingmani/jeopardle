@@ -2,7 +2,11 @@ import * as React from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { SiteFooter } from "./site-footer";
 
-const GameState = ({ path }) => {
+interface GameStateProps {
+  path: string;
+}
+
+const GameState = ({ path }: GameStateProps) => {
   switch (path) {
     case "/":
       return null;
