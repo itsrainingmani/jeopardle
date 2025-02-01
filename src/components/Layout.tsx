@@ -8,8 +8,12 @@ interface GameStateProps {
 
 const GameState = ({ path }: GameStateProps) => {
   switch (path) {
-    case "/":
-      return null;
+    case "/about":
+      return (
+        <sub className="text-yellow-500 font-extrabold text-3xl font-mono">
+          ?
+        </sub>
+      );
     case "/infinite":
       return (
         <sub className="text-red-500 font-extrabold text-3xl font-mono">∞</sub>

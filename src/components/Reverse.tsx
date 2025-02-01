@@ -12,7 +12,7 @@ import { calculateSimilarity } from "@/utils/similarity";
 import { SkipForwardIcon } from "lucide-react";
 import { fetchData } from "@/lib/utils";
 
-const RANDOM_API_URL = `${import.meta.env.VITE_API_URL}/random?reverse=yes`;
+const RANDOM_API_URL = `${import.meta.env.VITE_API_URL}/random`;
 
 export function Game() {
   const [gameState, setGameState] = useState<GameState>({
