@@ -10,7 +10,7 @@ export interface Clue {
   air_date: Date;
   notes: string | null;
   season: number;
-  embedding: number[] | null;
+  embedding: number[];
 }
 
 export interface GameState {

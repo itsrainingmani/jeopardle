@@ -7,11 +7,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Results } from "@/components/Results";
 import { Winnings } from "@/components/Winnings";
 import { LoadingClue } from "@/components/LoadingClue";
-import { calculateSimilarity } from "@/utils/similarity";
-
+import { calculateBinaryCosine } from "@/utils/similarity";
 import { SkipForwardIcon } from "lucide-react";
 import { fetchData } from "@/lib/utils";
-
 const RANDOM_API_URL = `${import.meta.env.VITE_API_URL}/random`;
 
 export function Game() {
@@ -24,6 +22,7 @@ export function Game() {
   const [isLoading, setIsLoading] = useState(true);
   const [answer, setAnswer] = useState("");
   const [money, setMoney] = useState(0);
+  // const mxbai: MixedbreadAIClient = useMixedBreadSDK();
 
   useEffect(() => {
     fetchData(RANDOM_API_URL)
@@ -46,27 +45,51 @@ export function Game() {
       });
   }, []);
 
-  const handleAnswer = () => {
+  const handleAnswer = async () => {
     if (!gameState.currentClue || !answer.trim()) return;
 
-    const similarity = calculateSimilarity(
-      answer,
-      gameState.currentClue.question
-    );
+    try {
+      const response = await fetch("/api/mixedbread/embeddings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_MXBAI_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: "mixedbread-ai/mxbai-embed-large-v1",
+          input: [answer],
+          normalized: true,
+          dimensions: 512,
+          encoding_format: "ubinary",
+        }),
+      });
 
-    setGameState((prev) => ({
-      ...prev,
-      userAnswer: answer,
-      isAnswered: true,
-      similarity,
-    }));
+      const data = await response.json();
+      const answerEmbedding = data.data[0].embedding;
+      console.log(gameState.currentClue?.embedding);
+      console.log(answerEmbedding);
 
-    if (gameState.currentClue.round !== 3) {
-      if (similarity > 75) {
-        setMoney(money + gameState.currentClue.clue_value);
-      } else if (similarity < 33) {
-        setMoney(money - gameState.currentClue.clue_value);
+      const similarity = calculateBinaryCosine(
+        gameState.currentClue?.embedding,
+        answerEmbedding
+      );
+      console.log(similarity);
+      setGameState((prev) => ({
+        ...prev,
+        userAnswer: answer,
+        isAnswered: true,
+        similarity,
+      }));
+
+      if (gameState.currentClue.round !== 3) {
+        if (similarity > 75) {
+          setMoney(money + gameState.currentClue.clue_value);
+        } else if (similarity < 33) {
+          setMoney(money - gameState.currentClue.clue_value);
+        }
       }
+    } catch (error) {
+      console.error("Error getting embeddings:", error);
     }
   };
 
