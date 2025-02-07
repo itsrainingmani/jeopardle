@@ -1,46 +1,29 @@
-import { Clue } from '@/components/Clue'
-import { Results } from '@/components/Results'
-import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
+import { Clue } from "@/components/Clue";
+import { Results } from "@/components/Results";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip'
-import { fetchData } from '@/lib/utils'
-import type { Clue as ClueType } from '@/types/game'
-import { createLazyFileRoute, Link } from '@tanstack/react-router'
-import { AnimatePresence, motion } from 'framer-motion'
-import { BadgeInfo } from 'lucide-react'
-import { useEffect, useState } from 'react'
+} from "@/components/ui/tooltip";
+import { fetchData } from "@/lib/utils";
+import type { Clue as ClueType } from "@/types/game";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { AnimatePresence, motion } from "framer-motion";
+import { BadgeInfo } from "lucide-react";
 
-const ONTHISDAY_URL = `${import.meta.env.VITE_API_URL}/onthisday`
+const ONTHISDAY_URL = `${import.meta.env.VITE_API_URL}/onthisday`;
 
-export const Route = createLazyFileRoute('/')({
+export const Route = createFileRoute("/")({
   component: Index,
-})
+  loader: () => fetchData(ONTHISDAY_URL),
+  staleTime: Infinity,
+});
 
 function Index() {
-  const [onthisday, setOnthisday] = useState<ClueType>()
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    fetchData(ONTHISDAY_URL)
-      .then((clue_data) => {
-        console.log('ON THIS DAY' + clue_data)
-        setOnthisday({
-          ...clue_data,
-          air_date: new Date(clue_data.air_date),
-        })
-      })
-      .catch((error) => {
-        console.error('Failed to fetch clue:', error)
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
-  }, [])
+  const onthisday: ClueType = Route.useLoaderData();
 
   return (
     <div className="flex flex-col gap-2 md:mt-10 sm:mt-4 mx-auto px-4 py-8 max-w-3xl items-center">
@@ -104,7 +87,7 @@ function Index() {
         On This Day
       </h3>
       <AnimatePresence mode="sync">
-        {isLoading ? (
+        {onthisday === null ? (
           <div className="flex flex-col space-y-3 items-center justify-center sm:max-w-xl max-w-md w-full">
             <Skeleton className="h-48 md:h-64 sm:max-w-xl max-w-md w-full rounded-xl mx-auto" />
             <div className="flex flex-col justify-center items-center space-y-2">
@@ -117,19 +100,19 @@ function Index() {
             key="loaded"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.1 }}
             exit={{ opacity: 0 }}
             className="sm:max-w-xl max-w-md w-full"
           >
-            <Clue clue={onthisday!} />
+            <Clue clue={onthisday} />
             <Results
               skipped
-              correctAnswer={onthisday!.question}
+              correctAnswer={onthisday.question}
               similarity={0}
             />
           </motion.div>
         )}
       </AnimatePresence>
     </div>
-  )
+  );
 }
