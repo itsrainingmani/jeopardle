@@ -9,8 +9,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { fetchData } from "@/lib/utils";
-import type { Clue as ClueType } from "@/types/game";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Await } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { BadgeInfo } from "lucide-react";
 
@@ -18,12 +17,30 @@ const ONTHISDAY_URL = `${import.meta.env.VITE_API_URL}/onthisday`;
 
 export const Route = createFileRoute("/")({
   component: Index,
-  loader: () => fetchData(ONTHISDAY_URL),
+  loader: async () => {
+    const clueData = fetchData(ONTHISDAY_URL);
+
+    return {
+      deferredClueData: clueData,
+    };
+  },
   staleTime: Infinity,
 });
 
+function LoadingClue() {
+  return (
+    <div className="flex flex-col space-y-3 items-center justify-center sm:max-w-xl max-w-md w-full">
+      <Skeleton className="h-48 md:h-64 sm:max-w-xl max-w-md w-full rounded-xl mx-auto" />
+      <div className="flex flex-col justify-center items-center space-y-2">
+        <Skeleton className="h-4 w-[200px]" />
+        <Skeleton className="h-4 w-[175px]" />
+      </div>
+    </div>
+  );
+}
+
 function Index() {
-  const onthisday: ClueType = Route.useLoaderData();
+  const { deferredClueData } = Route.useLoaderData();
 
   return (
     <div className="flex flex-col gap-2 md:mt-10 sm:mt-4 mx-auto px-4 py-8 max-w-3xl items-center">
@@ -86,33 +103,25 @@ function Index() {
       <h3 className="font-semibold text-2xl sm:text-3xl m-2 text-center">
         On This Day
       </h3>
-      <AnimatePresence mode="sync">
-        {onthisday === null ? (
-          <div className="flex flex-col space-y-3 items-center justify-center sm:max-w-xl max-w-md w-full">
-            <Skeleton className="h-48 md:h-64 sm:max-w-xl max-w-md w-full rounded-xl mx-auto" />
-            <div className="flex flex-col justify-center items-center space-y-2">
-              <Skeleton className="h-4 w-[200px]" />
-              <Skeleton className="h-4 w-[175px]" />
-            </div>
-          </div>
-        ) : (
-          <motion.div
-            key="loaded"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            exit={{ opacity: 0 }}
-            className="sm:max-w-xl max-w-md w-full"
-          >
-            <Clue clue={onthisday} />
-            <Results
-              skipped
-              correctAnswer={onthisday.question}
-              similarity={0}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Await promise={deferredClueData} fallback={<LoadingClue />}>
+        {(data) => {
+          return (
+            <AnimatePresence mode="sync">
+              <motion.div
+                key="loaded"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.1 }}
+                exit={{ opacity: 0 }}
+                className="sm:max-w-xl max-w-md w-full"
+              >
+                <Clue clue={data} />
+                <Results skipped correctAnswer={data.question} similarity={0} />
+              </motion.div>
+            </AnimatePresence>
+          );
+        }}
+      </Await>
     </div>
   );
 }
