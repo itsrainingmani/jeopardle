@@ -9,7 +9,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { fetchData } from "@/lib/utils";
-import { createFileRoute, Link, Await } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  Await,
+  CatchBoundary,
+} from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { BadgeInfo } from "lucide-react";
 
@@ -100,28 +105,45 @@ function Index() {
         </Button>
       </Link>
       <hr />
-      <h3 className="font-semibold text-2xl sm:text-3xl m-2 text-center">
-        On This Day
-      </h3>
-      <Await promise={deferredClueData} fallback={<LoadingClue />}>
-        {(data) => {
-          return (
-            <AnimatePresence mode="sync">
-              <motion.div
-                key="loaded"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.1 }}
-                exit={{ opacity: 0 }}
-                className="sm:max-w-xl max-w-md w-full"
-              >
-                <Clue clue={data} />
-                <Results skipped correctAnswer={data.question} similarity={0} />
-              </motion.div>
-            </AnimatePresence>
-          );
-        }}
-      </Await>
+      <CatchBoundary
+        getResetKey={() => "reset"}
+        onCatch={(error) => console.error(error)}
+        errorComponent={undefined}
+      >
+        <h3 className="font-semibold text-2xl sm:text-3xl m-2 text-center">
+          On This Day
+        </h3>
+        <Await promise={deferredClueData} fallback={<LoadingClue />}>
+          {(data) => {
+            return (
+              <AnimatePresence mode="sync">
+                <motion.div
+                  key="loaded"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.1 }}
+                  exit={{ opacity: 0 }}
+                  className="sm:max-w-xl max-w-md w-full"
+                >
+                  <Clue
+                    category={data.category}
+                    comments={data.comments}
+                    answer={data.answer}
+                    airDate={data.air_date}
+                    round={data.round}
+                    clueValue={data.clue_value}
+                  />
+                  <Results
+                    skipped
+                    correctAnswer={data.question}
+                    similarity={0}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            );
+          }}
+        </Await>
+      </CatchBoundary>
     </div>
   );
 }

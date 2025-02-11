@@ -1,12 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { Clue as ClueType } from "../types/game";
 import { motion } from "framer-motion";
 import { Tilt } from "@/components/ui/tilt";
 import { Badge } from "@/components/ui/badge";
-
-interface ClueProps {
-  clue: ClueType;
-}
 
 function matchRound(round: number) {
   switch (round) {
@@ -22,8 +17,24 @@ function matchRound(round: number) {
   }
 }
 
-export function Clue({ clue }: ClueProps) {
-  const round = matchRound(clue.round);
+interface ClueProps {
+  category: string;
+  comments: string | null;
+  answer: string;
+  airDate: Date;
+  round: number;
+  clueValue?: number;
+}
+
+export function Clue({
+  category,
+  comments,
+  answer,
+  airDate,
+  round,
+  clueValue,
+}: ClueProps) {
+  const roundName = matchRound(round);
 
   return (
     <Tilt rotationFactor={1} isRevese>
@@ -35,24 +46,24 @@ export function Clue({ clue }: ClueProps) {
         <Card className="w-full mx-auto">
           <CardHeader className="sm:p-6 p-2">
             <CardTitle className="md:text-3xl sm:text-2xl text-lg font-bold font-mono text-center">
-              {clue.category}
+              {category}
             </CardTitle>
-            {clue.comments && (
+            {comments && (
               <p className="sm:text-md text-sm px-2 text-center text-muted-foreground italic">
-                {clue.comments}
+                {comments}
               </p>
             )}
           </CardHeader>
           <CardContent>
             <p className="md:text-2xl sm:text-xl text-lg sm:mb-8 mb-2 sm:p-4 p-2 text-center font-medium font-[Lexend]">
-              {clue.answer}
+              {answer}
             </p>
             <div className="flex justify-between sm:text-md text-sm text-muted-foreground">
-              <span>{clue.air_date.getFullYear()}</span>
-              <span>Round: {round}</span>
-              {clue.round !== 3 ? (
+              <span>{airDate.getFullYear()}</span>
+              <span>Round: {roundName}</span>
+              {round !== 3 && clueValue ? (
                 <Badge className="bg-green-700 hover:bg-green-700 sm:text-sm text-xs">
-                  ${clue.clue_value}
+                  ${clueValue}
                 </Badge>
               ) : null}
             </div>

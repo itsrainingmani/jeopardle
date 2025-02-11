@@ -110,7 +110,14 @@ export function Game() {
             transition={{ delay: 0.2 }}
             exit={{ opacity: 0 }}
           >
-            <Clue clue={gameState.currentClue!} />
+            <Clue
+              category={gameState.currentClue!.category}
+              comments={gameState.currentClue!.comments}
+              answer={gameState.currentClue!.answer}
+              airDate={gameState.currentClue!.air_date}
+              round={gameState.currentClue!.round}
+              clueValue={gameState.currentClue!.clue_value}
+            />
           </motion.div>
         )}
       </AnimatePresence>
