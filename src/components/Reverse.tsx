@@ -85,6 +85,8 @@ export function Game() {
       if (gameState.currentClue.round !== 3) {
         if (similarity > 70) {
           setMoney(money + gameState.currentClue.clue_value);
+        } else if (similarity >= 50 && similarity <= 70) {
+          setMoney(money + gameState.currentClue.clue_value / 2);
         } else if (similarity < 33) {
           setMoney(money - gameState.currentClue.clue_value);
         }
