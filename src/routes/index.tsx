@@ -52,26 +52,43 @@ function Index() {
       <div className="flex flex-col gap-4 justify-center items-center">
         <h2 className="font-semibold text-3xl sm:text-4xl">Game Modes</h2>
         <motion.div className="flex flex-col items-center sm:flex-row sm:gap-4 gap-2 justify-center">
-          <Link to="/infinite">
-            <Button
-              type="button"
-              className="p-6 m-2 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] font-semibold text-xl"
-            >
-              Infinite Jeopardy!
-            </Button>
-          </Link>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button
-                  type="button"
-                  className="p-6 m-2 text-zinc-50 rounded-4xl bg-[var(--jeopardy-accent)]/50 hover:bg-[var(--jeopardy-accent)]/50 hover:border-[var(--jeopardy-accent)]/25 hover:cursor-not-allowed font-semibold text-xl focus:outline-none"
-                >
-                  Reverse Jeopardy!
-                </Button>
+                <Link to="/infinite">
+                  <Button
+                    type="button"
+                    className="p-6 m-2 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] font-semibold text-xl"
+                  >
+                    Infinite Jeopardy!
+                  </Button>
+                </Link>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Coming soon!</p>
+                <p>
+                  Guess the answers to Jeopardy! clues and try to win as much
+                  money as possible!
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link to="/reverse">
+                  <Button
+                    type="button"
+                    className="p-6 m-2 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] font-semibold text-xl"
+                  >
+                    Reverse Jeopardy!
+                  </Button>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>
+                  Try to guess the Jeopardy! clue when only given the Category
+                  and the Answer
+                </p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

@@ -9,7 +9,7 @@ import { Winnings } from "@/components/Winnings";
 import { LoadingClue } from "@/components/LoadingClue";
 import { calculateSimilarity } from "@/utils/similarity";
 
-import { SkipForwardIcon } from "lucide-react";
+import { Loader2, SkipForwardIcon } from "lucide-react";
 import { fetchData } from "@/lib/utils";
 
 const RANDOM_API_URL = `${import.meta.env.VITE_API_URL}/random`;
@@ -22,6 +22,8 @@ export function Game() {
     similarity: 0,
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [isAnswered, setIsAnswered] = useState(false);
+
   const [answer, setAnswer] = useState("");
   const [money, setMoney] = useState(0);
 
@@ -47,6 +49,7 @@ export function Game() {
   }, []);
 
   const handleAnswer = () => {
+    setIsAnswered(true);
     if (!gameState.currentClue || !answer.trim()) return;
 
     const similarity = calculateSimilarity(
@@ -68,6 +71,7 @@ export function Game() {
         setMoney(money - gameState.currentClue.clue_value);
       }
     }
+    setIsAnswered(false);
   };
 
   const handleNextClue = () => {
@@ -147,6 +151,7 @@ export function Game() {
             onClick={handleAnswer}
           >
             Answer
+            {isAnswered && <Loader2 className="animate-spin" />}
           </Button>
           <Button
             className="p-6 sm:m-2 mx-2 rounded-3xl bg-zinc-500 sm:text-lg text-md text-muted"

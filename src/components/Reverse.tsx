@@ -8,7 +8,7 @@ import { Results } from "@/components/Results";
 import { Winnings } from "@/components/Winnings";
 import { LoadingClue } from "@/components/LoadingClue";
 import { calculateBinaryCosine } from "@/utils/similarity";
-import { SkipForwardIcon } from "lucide-react";
+import { Loader2, SkipForwardIcon } from "lucide-react";
 import { fetchData } from "@/lib/utils";
 const RANDOM_API_URL = `${import.meta.env.VITE_API_URL}/random`;
 
@@ -20,9 +20,9 @@ export function Game() {
     similarity: 0,
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [isAnswered, setIsAnswered] = useState(false);
   const [answer, setAnswer] = useState("");
   const [money, setMoney] = useState(0);
-  // const mxbai: MixedbreadAIClient = useMixedBreadSDK();
 
   useEffect(() => {
     fetchData(RANDOM_API_URL)
@@ -46,6 +46,7 @@ export function Game() {
   }, []);
 
   const handleAnswer = async () => {
+    setIsAnswered(true);
     if (!gameState.currentClue || !answer.trim()) return;
 
     try {
@@ -82,7 +83,7 @@ export function Game() {
       }));
 
       if (gameState.currentClue.round !== 3) {
-        if (similarity > 75) {
+        if (similarity > 70) {
           setMoney(money + gameState.currentClue.clue_value);
         } else if (similarity < 33) {
           setMoney(money - gameState.currentClue.clue_value);
@@ -90,6 +91,8 @@ export function Game() {
       }
     } catch (error) {
       console.error("Error getting embeddings:", error);
+    } finally {
+      setIsAnswered(false);
     }
   };
 
@@ -154,7 +157,7 @@ export function Game() {
         <Input
           className="bg-white p-4"
           type="text"
-          placeholder="What is..."
+          placeholder="Guess the clue..."
           value={answer}
           onChange={(e) => setAnswer(e.target.value)}
           disabled={gameState.isAnswered || isLoading}
@@ -170,6 +173,7 @@ export function Game() {
             onClick={handleAnswer}
           >
             Answer
+            {isAnswered && <Loader2 className="animate-spin" />}
           </Button>
           <Button
             className="p-6 sm:m-2 mx-2 rounded-3xl bg-zinc-500 sm:text-lg text-md text-muted"

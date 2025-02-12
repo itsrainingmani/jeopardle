@@ -56,8 +56,13 @@ function About() {
           >
             Infinite Jeopardy!
           </Link>{" "}
-          & Reverse Jeopardy{" "}
-          <span className="text-muted-foreground text-sm">(coming soon!)</span>
+          &{" "}
+          <Link
+            to="/reverse"
+            className="text-[var(--jeopardy-accent)] hover:text-[var(--jeopardy-main)]"
+          >
+            Reverse Jeopardy!
+          </Link>
         </ListEl>
         <ListEl>
           Want to learn more trivia? Search through every Jeopardy! clue from
