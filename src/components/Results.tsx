@@ -16,7 +16,7 @@ export function Results({ skipped, correctAnswer, similarity }: ResultsProps) {
       {!skipped && (
         <div>
           <p className="text-sm text-muted-foreground mb-2">
-            Similarity to your answer: {similarity.toFixed(1)}%
+            Similarity to your answer: {similarity.toFixed(0)}%
           </p>
           <Progress
             value={similarity}

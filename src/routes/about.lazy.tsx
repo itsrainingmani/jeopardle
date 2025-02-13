@@ -34,7 +34,7 @@ function ListEl({ children }: { children: React.ReactNode }) {
 
 function About() {
   return (
-    <div className="container mx-auto px-4 py-8 max-w-xl justify-center items-center">
+    <div className="container mx-auto px-4 py-8 max-w-2xl justify-center items-center">
       <p className="font-medium text-xl py-4">
         <span className="font-extrabold mb-4 bg-gradient-to-r from-[var(--jeopardy-accent)] to-[var(--jeopardy-main)] text-transparent bg-clip-text text-xl">
           jeopardle!
@@ -44,8 +44,8 @@ function About() {
       </p>
       <motion.ul
         variants={container}
-        initial="hidden"
-        animate="show"
+        // initial="hidden"
+        // animate="show"
         className="list-decimal font-[Lexend]"
       >
         <ListEl>
@@ -72,6 +72,8 @@ function About() {
         <ListEl>
           Become a Trivia Champion! &{" "}
           <a
+            target="_blank"
+            rel="noreferrer"
             className="text-[var(--jeopardy-accent)] hover:text-[var(--jeopardy-main)]"
             href="https://www.jeopardy.com/be-on-j/anytime-test"
             referrerPolicy="no-referrer"
@@ -81,6 +83,45 @@ function About() {
           to go on Jeopardy!
         </ListEl>
       </motion.ul>
+      <hr />
+      <h3 className="font-medium text-2xl underline py-4">
+        Reverse Jeopardy! Scoring
+      </h3>
+      <div className="font-medium text-lg">
+        <p>
+          <Link
+            to="/reverse"
+            className="text-[var(--jeopardy-accent)] hover:text-[var(--jeopardy-main)]"
+          >
+            Reverse Jeopardy!
+          </Link>{" "}
+          uses precomputed{" "}
+          <a
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium underline underline-offset-2 after:content-['↗'] decoration-dotted hover:decoration-solid"
+            href="https://en.wikipedia.org/wiki/Word_embedding"
+          >
+            Vector Embeddings
+          </a>{" "}
+          on all the clues to score your answer.
+          <br /> When you enter a guess, the vector embeddings for your guess
+          are generated dynamically using Mixed Bread's{" "}
+          <a
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium underline underline-offset-2 after:content-['↗'] decoration-dotted hover:decoration-solid"
+            href="https://www.mixedbread.ai/docs/embeddings/mxbai-embed-large-v1"
+          >
+            mxbai-embed-large-v1
+          </a>{" "}
+          model.
+          <br />
+          Using that embeddings vector, I calculate the binary cosine similarity
+          which allows me to know how close your guess was semantically to the
+          answer!
+        </p>
+      </div>
       <div className="flex justify-center sm:justify-start">
         <Link to="/">
           <Button className="before:content-['←'] p-6 my-8 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] text-lg">

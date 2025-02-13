@@ -48,50 +48,72 @@ function Index() {
   const { deferredClueData } = Route.useLoaderData();
 
   return (
-    <div className="flex flex-col gap-2 md:mt-10 sm:mt-4 mx-auto px-4 py-8 max-w-3xl items-center">
+    <div className="flex flex-col gap-2 md:mt-6 sm:mt-4 mx-auto px-4 md:py-2 py-1 max-w-3xl items-center">
       <div className="flex flex-col gap-4 justify-center items-center">
         <h2 className="font-semibold text-3xl sm:text-4xl">Game Modes</h2>
-        <motion.div className="flex flex-col items-center sm:flex-row sm:gap-4 gap-2 justify-center">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link to="/infinite">
-                  <Button
-                    type="button"
-                    className="p-6 m-2 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] font-semibold text-xl"
-                  >
-                    Infinite Jeopardy!
-                  </Button>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>
-                  Guess the answers to Jeopardy! clues and try to win as much
-                  money as possible!
-                </p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link to="/reverse">
-                  <Button
-                    type="button"
-                    className="p-6 m-2 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] font-semibold text-xl"
-                  >
-                    Reverse Jeopardy!
-                  </Button>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>
-                  Try to guess the Jeopardy! clue when only given the Category
-                  and the Answer
-                </p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+        <motion.div className="grid grid-flow-row grid-cols-1 sm:grid-cols-2 gap-2 items-stretch">
+          <div className="flex flex-1 flex-col gap-4 border rounded-3xl p-4 items-center justify-between h-full">
+            <p className="font-[Lexend] whitespace-break-spaces text-lg">
+              Play an{" "}
+              <span className="bg-gradient-to-r from-[var(--jeopardy-accent)] to-[var(--jeopardy-main)] text-transparent bg-clip-text">
+                Infinite
+              </span>{" "}
+              version of Jeopardy and try to acculumate as many points as
+              possible. There are{" "}
+              <span className="text-green-600">no limits</span> to many clues
+              you can guess! <br />
+              The categories and clues are always shown in a random order.
+            </p>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link to="/infinite">
+                    <Button
+                      type="button"
+                      className="p-6 m-2 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] font-semibold text-xl"
+                    >
+                      Infinite Jeopardy!
+                    </Button>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>
+                    Guess the answers to Jeopardy! clues and try to win as much
+                    money as possible!
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+          <div className="flex flex-1 flex-col gap-4 border rounded-3xl p-4 items-center justify-between h-full">
+            <p className="font-[Lexend] whitespace-break-spaces text-lg">
+              Think you're too good for regular Jeopardy? Try a{" "}
+              <span className="text-red-600">harder</span> version where you
+              have to guess the clue given the answer and the category!
+              <br />
+              Your answers are scored using an LLM.
+            </p>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link to="/reverse">
+                    <Button
+                      type="button"
+                      className="p-6 m-2 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] font-semibold text-xl"
+                    >
+                      Reverse Jeopardy!
+                    </Button>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>
+                    Try to guess the Jeopardy! clue when only given the Category
+                    and the Answer
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
         </motion.div>
       </div>
       <TooltipProvider>
