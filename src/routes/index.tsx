@@ -53,7 +53,7 @@ function Index() {
         <h2 className="font-semibold text-3xl sm:text-4xl">Game Modes</h2>
         <motion.div className="grid grid-flow-row grid-cols-1 sm:grid-cols-2 gap-2 items-stretch">
           <div className="flex flex-1 flex-col gap-4 border rounded-3xl p-4 items-center justify-between h-full">
-            <p className="font-[Lexend] whitespace-break-spaces text-lg">
+            <p className="font-[Lexend] whitespace-break-spaces sm:text-lg">
               Play an{" "}
               <span className="bg-gradient-to-r from-[var(--jeopardy-accent)] to-[var(--jeopardy-main)] text-transparent bg-clip-text">
                 Infinite
@@ -70,7 +70,7 @@ function Index() {
                   <Link to="/infinite">
                     <Button
                       type="button"
-                      className="p-6 m-2 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] font-semibold text-xl"
+                      className="p-6 m-2 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] font-semibold sm:text-lg md:text-xl text-sm"
                     >
                       Infinite Jeopardy!
                     </Button>
@@ -86,7 +86,7 @@ function Index() {
             </TooltipProvider>
           </div>
           <div className="flex flex-1 flex-col gap-4 border rounded-3xl p-4 items-center justify-between h-full">
-            <p className="font-[Lexend] whitespace-break-spaces text-lg">
+            <p className="font-[Lexend] whitespace-break-spaces sm:text-lg">
               Think you're too good for regular Jeopardy? Try a{" "}
               <span className="text-red-600">harder</span> version where you
               have to guess the clue given the answer and the category!
@@ -99,7 +99,7 @@ function Index() {
                   <Link to="/reverse">
                     <Button
                       type="button"
-                      className="p-6 m-2 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] font-semibold text-xl"
+                      className="p-6 m-2 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] font-semibold sm:text-lg md:text-xl text-sm"
                     >
                       Reverse Jeopardy!
                     </Button>
@@ -122,7 +122,7 @@ function Index() {
             <Button
               type="button"
               variant="outline"
-              className="p-6 m-2 rounded-4xl bg-transparent/75 text-[var(--jeopardy-main)]/25 hover:text-[var(--jeopardy-main)]/25 border-[var(--jeopardy-main)]/25 hover:border-[var(--jeopardy-main)]/25 text-lg hover:cursor-not-allowed focus:outline-none"
+              className="p-6 m-2 rounded-4xl bg-transparent/75 text-[var(--jeopardy-main)]/25 hover:text-[var(--jeopardy-main)]/25 border-[var(--jeopardy-main)]/25 hover:border-[var(--jeopardy-main)]/25 md:text-lg text-sm hover:cursor-not-allowed focus:outline-none"
             >
               Browse Clues
             </Button>
@@ -137,7 +137,7 @@ function Index() {
         <Button
           type="button"
           variant="outline"
-          className="p-6 m-2 rounded-4xl text-[var(--jeopardy-main)] border-[var(--jeopardy-main)] hover:bg-zinc-100 text-lg"
+          className="p-6 m-2 rounded-4xl text-[var(--jeopardy-main)] border-[var(--jeopardy-main)] hover:bg-zinc-100 md:text-lg text-sm"
         >
           About
           <BadgeInfo />

@@ -35,8 +35,8 @@ function ListEl({ children }: { children: React.ReactNode }) {
 function About() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-2xl justify-center items-center">
-      <p className="font-medium text-xl py-4">
-        <span className="font-extrabold mb-4 bg-gradient-to-r from-[var(--jeopardy-accent)] to-[var(--jeopardy-main)] text-transparent bg-clip-text text-xl">
+      <p className="font-medium sm:text-xl text-lg py-4">
+        <span className="font-extrabold mb-4 bg-gradient-to-r from-[var(--jeopardy-accent)] to-[var(--jeopardy-main)] text-transparent bg-clip-text sm:text-xl text-lg">
           jeopardle!
         </span>{" "}
         is a simple website that was born out of my dual desires to become a
@@ -87,7 +87,7 @@ function About() {
       <h3 className="font-medium text-2xl underline py-4">
         Reverse Jeopardy! Scoring
       </h3>
-      <div className="font-medium text-lg">
+      <div className="font-medium sm:text-xl text-lg">
         <p>
           <Link
             to="/reverse"
@@ -124,7 +124,7 @@ function About() {
       </div>
       <div className="flex justify-center sm:justify-start">
         <Link to="/">
-          <Button className="before:content-['←'] p-6 my-8 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] text-lg">
+          <Button className="before:content-['←'] p-6 my-8 rounded-4xl hover:bg-[var(--jeopardy-main)] bg-[var(--jeopardy-accent)] sm:text-lg text-sm">
             Back Home
           </Button>
         </Link>
