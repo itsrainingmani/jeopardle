@@ -60,8 +60,8 @@ function Index() {
               </span>{" "}
               version of Jeopardy and try to acculumate as many points as
               possible. There are{" "}
-              <span className="text-green-600">no limits</span> to many clues
-              you can guess! <br />
+              <span className="text-green-600">515,000</span> clues to play
+              through! <br />
               The categories and clues are always shown in a random order.
             </p>
             <TooltipProvider>
@@ -89,9 +89,9 @@ function Index() {
             <p className="font-[Lexend] whitespace-break-spaces sm:text-lg">
               Think you're too good for regular Jeopardy? Try a{" "}
               <span className="text-red-600">harder</span> version where you
-              have to guess the clue given the answer and the category!
+              have to guess the clue when given the answer and the category!
               <br />
-              Your answers are scored using an LLM.
+              An LLM will evaluate your answer.
             </p>
             <TooltipProvider>
               <Tooltip>
