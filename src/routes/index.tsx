@@ -116,7 +116,7 @@ function Index() {
           </div>
         </motion.div>
       </div>
-      <TooltipProvider>
+      {/* <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
@@ -131,7 +131,7 @@ function Index() {
             <p>Coming soon!</p>
           </TooltipContent>
         </Tooltip>
-      </TooltipProvider>
+      </TooltipProvider> */}
 
       <Link to="/about">
         <Button

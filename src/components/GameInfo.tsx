@@ -82,7 +82,10 @@ export function PlayDrawerDialog() {
     return (
       <Dialog open={firstTime || open} onOpenChange={setOpen} modal>
         <DialogTrigger asChild>
-          <Button variant="outline" className="rounded-full w-10 h-10 p-0">
+          <Button
+            variant="outline"
+            className="rounded-full sm:w-10 sm:h-10 w-8 h-8 p-0"
+          >
             <Info className="h-4 w-4" />
           </Button>
         </DialogTrigger>
@@ -110,7 +113,10 @@ export function PlayDrawerDialog() {
   return (
     <Drawer open={firstTime || open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" className="rounded-full w-10 h-10 p-0">
+        <Button
+          variant="outline"
+          className="rounded-full sm:w-10 sm:h-10 w-8 h-8 p-0"
+        >
           <Info className="h-4 w-4" />
         </Button>
       </DrawerTrigger>

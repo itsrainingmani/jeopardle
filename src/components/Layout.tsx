@@ -49,7 +49,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
             </h1>
           </Link>
           {isReversePath && (
-            <div className="fixed right-8 sm:top-6 top-4">
+            <div className="fixed md:right-8 right-4 md:top-6 top-5">
               <PlayDrawerDialog />
             </div>
           )}
