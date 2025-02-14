@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { SiteFooter } from "./site-footer";
+import { SiteFooter } from "@/components/site-footer";
+import { PlayDrawerDialog } from "@/components/GameInfo";
 
 interface GameStateProps {
   path: string;
@@ -33,11 +34,12 @@ const GameState = ({ path }: GameStateProps) => {
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   const routerState = useRouterState();
+  const isReversePath = routerState.location.pathname === "/reverse";
 
   return (
     <div className="min-h-screen flex flex-col min-w-screen">
       <header>
-        <div className="container mx-auto max-w-3xl w-full text-center">
+        <div className="container mx-auto max-w-3xl w-full text-center relative">
           <Link to="/">
             <h1 className="relative inline-block text-5xl md:text-6xl py-2 pl-2 font-extrabold mb-4 bg-gradient-to-r from-[var(--jeopardy-accent)] to-[var(--jeopardy-main)] text-transparent bg-clip-text">
               jeopardle!
@@ -46,6 +48,11 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
               </span>
             </h1>
           </Link>
+          {isReversePath && (
+            <div className="fixed right-8 sm:top-6 top-4">
+              <PlayDrawerDialog />
+            </div>
+          )}
         </div>
         <hr />
       </header>
