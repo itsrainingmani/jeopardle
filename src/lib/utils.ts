@@ -18,6 +18,7 @@ export const fetchData = async (url: string): Promise<ClueType> => {
 
 interface PaginatedResponse {
   data: ClueType[];
+  total: number;
   page: number;
   page_size: number;
 }
