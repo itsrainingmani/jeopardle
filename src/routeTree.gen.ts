@@ -13,13 +13,13 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as CluesImport } from './routes/clues'
 import { Route as IndexImport } from './routes/index'
 
 // Create Virtual Routes
 
 const ReverseLazyImport = createFileRoute('/reverse')()
 const InfiniteLazyImport = createFileRoute('/infinite')()
-const CluesLazyImport = createFileRoute('/clues')()
 const AboutLazyImport = createFileRoute('/about')()
 
 // Create/Update Routes
@@ -36,17 +36,17 @@ const InfiniteLazyRoute = InfiniteLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/infinite.lazy').then((d) => d.Route))
 
-const CluesLazyRoute = CluesLazyImport.update({
-  id: '/clues',
-  path: '/clues',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/clues.lazy').then((d) => d.Route))
-
 const AboutLazyRoute = AboutLazyImport.update({
   id: '/about',
   path: '/about',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
+
+const CluesRoute = CluesImport.update({
+  id: '/clues',
+  path: '/clues',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -65,18 +65,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/clues': {
+      id: '/clues'
+      path: '/clues'
+      fullPath: '/clues'
+      preLoaderRoute: typeof CluesImport
+      parentRoute: typeof rootRoute
+    }
     '/about': {
       id: '/about'
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/clues': {
-      id: '/clues'
-      path: '/clues'
-      fullPath: '/clues'
-      preLoaderRoute: typeof CluesLazyImport
       parentRoute: typeof rootRoute
     }
     '/infinite': {
@@ -100,16 +100,16 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/clues': typeof CluesRoute
   '/about': typeof AboutLazyRoute
-  '/clues': typeof CluesLazyRoute
   '/infinite': typeof InfiniteLazyRoute
   '/reverse': typeof ReverseLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/clues': typeof CluesRoute
   '/about': typeof AboutLazyRoute
-  '/clues': typeof CluesLazyRoute
   '/infinite': typeof InfiniteLazyRoute
   '/reverse': typeof ReverseLazyRoute
 }
@@ -117,33 +117,33 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/clues': typeof CluesRoute
   '/about': typeof AboutLazyRoute
-  '/clues': typeof CluesLazyRoute
   '/infinite': typeof InfiniteLazyRoute
   '/reverse': typeof ReverseLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/clues' | '/infinite' | '/reverse'
+  fullPaths: '/' | '/clues' | '/about' | '/infinite' | '/reverse'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/clues' | '/infinite' | '/reverse'
-  id: '__root__' | '/' | '/about' | '/clues' | '/infinite' | '/reverse'
+  to: '/' | '/clues' | '/about' | '/infinite' | '/reverse'
+  id: '__root__' | '/' | '/clues' | '/about' | '/infinite' | '/reverse'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CluesRoute: typeof CluesRoute
   AboutLazyRoute: typeof AboutLazyRoute
-  CluesLazyRoute: typeof CluesLazyRoute
   InfiniteLazyRoute: typeof InfiniteLazyRoute
   ReverseLazyRoute: typeof ReverseLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CluesRoute: CluesRoute,
   AboutLazyRoute: AboutLazyRoute,
-  CluesLazyRoute: CluesLazyRoute,
   InfiniteLazyRoute: InfiniteLazyRoute,
   ReverseLazyRoute: ReverseLazyRoute,
 }
@@ -159,8 +159,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/about",
         "/clues",
+        "/about",
         "/infinite",
         "/reverse"
       ]
@@ -168,11 +168,11 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.tsx"
     },
+    "/clues": {
+      "filePath": "clues.tsx"
+    },
     "/about": {
       "filePath": "about.lazy.tsx"
-    },
-    "/clues": {
-      "filePath": "clues.lazy.tsx"
     },
     "/infinite": {
       "filePath": "infinite.lazy.tsx"

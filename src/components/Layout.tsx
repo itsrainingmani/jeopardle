@@ -27,6 +27,12 @@ const GameState = ({ path }: GameStateProps) => {
           ♻
         </sub>
       );
+    case "/clues":
+      return (
+        <sub className="text-purple-600 font-extrabold md:text-3xl text-2xl">
+          clues
+        </sub>
+      );
     default:
       return null;
   }
