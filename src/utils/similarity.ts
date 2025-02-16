@@ -1,4 +1,16 @@
 export function calculateSimilarity(str1: string, str2: string): number {
+  const removeParentheses = (s: string) => s.replace(/\([^)]*\)/g, "").trim();
+  const withParentheses = calculateSimilarityCore(str1, str2);
+  const withoutParentheses = calculateSimilarityCore(
+    removeParentheses(str1),
+    removeParentheses(str2)
+  );
+
+  // Return the higher of the two scores
+  return Math.max(withParentheses, withoutParentheses);
+}
+
+function calculateSimilarityCore(str1: string, str2: string): number {
   const s1 = str1.toLowerCase().replace(/[^a-z0-9]/g, "");
   const s2 = str2.toLowerCase().replace(/[^a-z0-9]/g, "");
 
