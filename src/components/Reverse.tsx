@@ -11,6 +11,7 @@ import { calculateBinaryCosine } from "@/utils/similarity";
 import { Loader2, SkipForwardIcon } from "lucide-react";
 import { fetchData } from "@/lib/utils";
 const RANDOM_API_URL = `${import.meta.env.VITE_API_URL}/random`;
+const EMBEDDING_API_URL = `${import.meta.env.VITE_API_URL}/generate_embeddings`;
 
 export function Game() {
   const [gameState, setGameState] = useState<GameState>({
@@ -50,23 +51,18 @@ export function Game() {
     if (!gameState.currentClue || !answer.trim()) return;
 
     try {
-      const response = await fetch("/api/mixedbread/embeddings", {
+      const response = await fetch(EMBEDDING_API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_MXBAI_API_KEY}`,
         },
         body: JSON.stringify({
-          model: "mixedbread-ai/mxbai-embed-large-v1",
-          input: [answer],
-          normalized: true,
-          dimensions: 512,
-          encoding_format: "ubinary",
+          input: answer,
         }),
       });
 
       const data = await response.json();
-      const answerEmbedding = data.data[0].embedding;
+      const answerEmbedding = data.embedding;
       console.log(gameState.currentClue?.embedding);
       console.log(answerEmbedding);
 
