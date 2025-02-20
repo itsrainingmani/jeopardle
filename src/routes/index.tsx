@@ -116,23 +116,15 @@ function Index() {
           </div>
         </motion.div>
       </div>
-      {/* <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              type="button"
-              variant="outline"
-              className="p-6 m-2 rounded-4xl bg-transparent/75 text-[var(--jeopardy-main)]/25 hover:text-[var(--jeopardy-main)]/25 border-[var(--jeopardy-main)]/25 hover:border-[var(--jeopardy-main)]/25 md:text-lg text-sm hover:cursor-not-allowed focus:outline-none"
-            >
-              Browse Clues
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Coming soon!</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider> */}
-
+      <Link to="/clues">
+        <Button
+          type="button"
+          variant="outline"
+          className="p-6 m-2 rounded-4xl text-[var(--jeopardy-main)] border-[var(--jeopardy-main)] hover:bg-zinc-100 md:text-lg text-sm"
+        >
+          Browse Clues
+        </Button>
+      </Link>
       <Link to="/about">
         <Button
           type="button"
