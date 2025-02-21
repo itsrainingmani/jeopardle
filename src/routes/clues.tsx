@@ -13,7 +13,7 @@ import {
 import { fetchPaginatedData } from "@/lib/utils";
 
 import { Await, createFileRoute } from "@tanstack/react-router";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+// import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import {
   ColumnDef,
   SortingState,
